@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开云 · 信息卡片介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f2f4f7;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #1d2b3a;
+            padding: 2.5rem 1.5rem;
+        }
+        .page-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* 主视觉区 浅灰叠加深色文字，用细线分割 */
+        .hero-card {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            padding: 3rem 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e6e9f0;
+            transition: box-shadow 0.2s;
+        }
+        .hero-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+        }
+        .hero-tag {
+            display: inline-block;
+            background: #eef1f6;
+            color: #2c3e50;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            border: 1px solid #d4dbe6;
+            margin-bottom: 1.5rem;
+        }
+        .hero-title {
+            font-size: 2.6rem;
+            font-weight: 550;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #0a1a2b;
+        }
+        .hero-title span {
+            background: #eef3fa;
+            padding: 0 0.2rem;
+        }
+        .hero-desc {
+            font-size: 1.1rem;
+            max-width: 720px;
+            color: #3f4e5f;
+            margin-bottom: 2rem;
+        }
+        .hero-link-sentence {
+            background: #f8faff;
+            display: inline-block;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px;
+            border: 1px solid #d0d9e6;
+            font-size: 1rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+        }
+        .hero-link-sentence a {
+            color: #1e3a5f;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dashed #90a5c0;
+            transition: border-color 0.2s;
+        }
+        .hero-link-sentence a:hover {
+            border-bottom-style: solid;
+            border-color: #1e3a5f;
+        }
+
+        /* 卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem 1.8rem 2.2rem;
+            border: 1px solid #e3e8f0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+        .card:hover {
+            box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+            border-color: #cdd8e8;
+        }
+        .card-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: -2px;
+        }
+        .card h2 {
+            font-size: 1.4rem;
+            font-weight: 550;
+            margin-bottom: 0.6rem;
+            color: #1d2b3a;
+        }
+        .card p {
+            font-size: 0.98rem;
+            color: #3b4b5e;
+            margin-bottom: 0.4rem;
+        }
+        .card .meta-note {
+            font-size: 0.9rem;
+            color: #6a7b8c;
+            border-top: 1px solid #eef2f8;
+            margin-top: 1rem;
+            padding-top: 0.8rem;
+        }
+
+        /* 适合人群卡片——单独一行，但也可以放入grid做全宽 */
+        .full-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem 1.8rem 2.2rem;
+            border: 1px solid #e3e8f0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            margin-bottom: 2.5rem;
+            transition: box-shadow 0.2s;
+        }
+        .full-card:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+            border-color: #cdd8e8;
+        }
+        .full-card h2 {
+            font-size: 1.4rem;
+            font-weight: 550;
+            margin-bottom: 1rem;
+            color: #1d2b3a;
+        }
+        .audience-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.6rem;
+            list-style: none;
+            padding: 0;
+        }
+        .audience-list li {
+            background: #f0f4fb;
+            padding: 0.3rem 1.2rem 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.98rem;
+            border: 1px solid #dae1ed;
+            color: #1f3348;
+        }
+
+        /* 自然链接段落卡片 */
+        .link-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem 1.8rem 2.2rem;
+            border: 1px solid #e3e8f0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            margin-bottom: 2.5rem;
+        }
+        .link-card p {
+            font-size: 1rem;
+            color: #2a3b4e;
+            margin-bottom: 0.6rem;
+        }
+        .link-card a {
+            color: #1e3a5f;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #b7c7db;
+        }
+        .link-card a:hover {
+            border-bottom: 1px solid #1e3a5f;
+        }
+
+        /* FAQ摘要卡片 */
+        .faq-mini {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem 1.8rem 2rem;
+            border: 1px solid #e3e8f0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+        .faq-mini h3 {
+            font-weight: 550;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: #1d2b3a;
+        }
+        .faq-item {
+            margin-bottom: 1rem;
+        }
+        .faq-q {
+            font-weight: 500;
+            font-size: 1rem;
+            color: #1f3a54;
+            margin-bottom: 0.15rem;
+        }
+        .faq-a {
+            font-size: 0.95rem;
+            color: #4d5f72;
+            padding-left: 0.25rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #dbdfe8;
+            margin: 0.4rem 0 0.6rem 0;
+        }
+
+        /* 响应式 */
+        @media (max-width: 700px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .hero-card {
+                padding: 2rem 1.5rem;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .card, .full-card, .link-card, .faq-mini {
+                padding: 1.5rem 1.2rem;
+            }
+            .audience-list {
+                gap: 0.5rem 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.7rem;
+            }
+            .hero-link-sentence {
+                font-size: 0.9rem;
+                padding: 0.4rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <!-- 主视觉卡片 -->
+    <div class="hero-card">
+        <div class="hero-tag">信息卡片 · 快速识别</div>
+        <h1 class="hero-title">
+            你想找到的那个网站：<span>开云</span>
+        </h1>
+        <p class="hero-desc">
+            没有复杂的入口迷宫，也没有多余的修饰词。当你面对一个陌生的站点时，最先想知道的往往是“它具体用来做什么”。这个页面就是为了回答那个问题——用卡片、分类和简洁的描述，帮你一眼看清方向。
+        </p>
+        <div class="hero-link-sentence">
+            关于 <a href="https://www.qing-kaiyun.com.cn">开云</a> 的更多细节，可以从下面的卡片里逐步了解。
+        </div>
+    </div>
+
+    <!-- 用途卡片网格 2列 -->
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-icon">📋</div>
+            <h2>信息聚合与展示</h2>
+            <p>站点以结构化的方式汇集内容，让访问者不必在堆砌的链接里翻找。卡片、板块、列表，每种形式都为快速提取信息而设计。</p>
+            <div class="meta-note">适用于需要清晰分类的阅读场景</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">🧭</div>
+            <h2>引导与索引</h2>
+            <p>不止是展示，同时提供轻量引导。通过分区和视觉层次，让不同需求的用户都能找到自己关心的部分，节省反复点击的时间。</p>
+            <div class="meta-note">导航体验偏向直觉化</div>
+        </div>
+    </div>
+
+    <!-- 适合人群卡片（全宽） -->
+    <div class="full-card">
+        <h2>适合谁</h2>
+        <ul class="audience-list">
+            <li>习惯先看概览再做判断的浏览者</li>
+            <li>想快速了解站点定位的访客</li>
+            <li>偏好卡片式阅读、不喜大段文字的读者</li>
+            <li>对界面简洁度有一定要求的用户</li>
+            <li>需要把某个站点推荐给他人，并附上简明说明的人</li>
+        </ul>
+        <p style="margin-top: 1.2rem; font-size: 0.95rem; color: #4e6075;">
+            无论你是偶然点进来，还是专门来确认某个用途，这些人群特征应该能帮你判断这里是否对路。
+        </p>
+    </div>
+
+    <!-- 自然链接段落卡片 -->
+    <div class="link-card">
+        <p>如果你之前听说过某个站点，但不清楚它具体整合了哪些内容，可以直接去 <a href="https://www.qing-kaiyun.com.cn">开云</a> 看一眼。首页的设计思路就是尽量减少认知负担——没有弹窗干扰，没有密集跳转，信息模块之间留有适当的呼吸感。</p>
+        <p style="margin-top: 0.6rem;">这种克制的布局，尤其适合那些对效率有要求的访问场景。你不需要记住复杂的路径，因为站点本身已经帮你把常见问题摊开在了表面。</p>
+    </div>
+
+    <!-- FAQ 摘要卡片 -->
+    <div class="faq-mini">
+        <h3>常见疑问摘要 · 快速参考</h3>
+        <div class="faq-item">
+            <div class="faq-q">这个网站的主要用途是什么？</div>
+            <div class="faq-a">以信息卡片和分区形式展示内容，方便访客快速理解站点的定位与结构。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">为什么没有显眼的“入口”或“进入”按钮？</div>
+            <div class="faq-a">页面本身已经是站点的一部分，内容即入口。如果需要了解更多，句子中自然嵌入了 <a href="https://www.qing-kaiyun.com.cn" style="color:#1e3a5f; text-decoration: underline; font-weight:500;">开云</a> 的链接，按需点击即可。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">适合在手机上查看吗？</div>
+            <div class="faq-a">卡片和文字都做了响应式适配，窄屏下自动变为单列，阅读体验没有太大落差。</div>
+        </div>
+        <hr>
+        <p style="font-size:0.9rem; color:#5e7083; margin-top: 0.8rem;">以上FAQ基于页面实际结构总结，不包含推测或承诺。</p>
+    </div>
+
+    <!-- 极简脚注，保持干净 -->
+    <div style="margin-top: 2rem; text-align: left; font-size: 0.8rem; color: #7c8d9f; border-top: 1px solid #e0e5ef; padding-top: 1.2rem;">
+        页面仅用于信息介绍 · 卡片式布局
+    </div>
+</div>
+</body>
+</html>
